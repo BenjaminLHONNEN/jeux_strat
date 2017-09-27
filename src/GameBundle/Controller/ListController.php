@@ -26,4 +26,13 @@ class ListController extends Controller
             "games" => $games,
         ]);
     }
+
+
+    /**
+     * @Route("/", name="index")
+     */
+    public function defaultAction()
+    {
+        return $this->indexAction();
+    }
 }
