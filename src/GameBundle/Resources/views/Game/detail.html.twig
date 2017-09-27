@@ -1,0 +1,16 @@
+
+{% extends 'template/defaultTemplate.html.twig' %}
+
+{% block page_title %}<title>{{ game.name }}</title>{% endblock %}
+
+{% block content %}
+    {{ dump(game) }}
+    <table>
+        <tr onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
+            <td><img height="200px" src="{{ asset(game.image) }}"></td>
+            <td><h2>{{ game.name }}</h2></td>
+            <td><p>{{ game.description }}</p></td>
+            <td width="150px"><h1>{{ (game.sumOfVote / game.numberOfVote) | round(2, 'floor') }} | 10</h1></td>
+        </tr>
+    </table>
+{% endblock %}
