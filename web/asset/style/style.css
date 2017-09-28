@@ -54,3 +54,15 @@ tr:last-child td:first-child{
 tr:last-child td:last-child{
     border-bottom-right-radius: 25px;
 }
+#button-header-desktop{
+    position: fixed;
+    right: 0%;
+    top: 0%;
+}
+.divSignTitle{
+    padding: 15px;
+    background-color: rgba(31,144,255,0.7);
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    color: white;
+}

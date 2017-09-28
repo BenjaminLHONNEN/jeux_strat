@@ -1,0 +1,15 @@
+{% extends 'template/defaultTemplate.html.twig' %}
+
+{% block page_title %}<title></title>{% endblock %}
+
+{% block content %}
+    {% if typeOfSign == 'up' %}
+        <h1 class="divSignTitle">Connect</h1>
+        <div class="divSign">
+            <h2>Mail adress:</h2>
+            <input type="text"> <br>
+            <h2>Password</h2>
+            <input type="text">
+        </div>
+    {% endif %}
+{% endblock %}
