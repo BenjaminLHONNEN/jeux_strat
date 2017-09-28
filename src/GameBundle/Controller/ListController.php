@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GameBundle\Repository\GameRepository;
-use GameBundle\Repository\Game;
+use GameBundle\Entity\Game;
 
 
 class ListController extends Controller

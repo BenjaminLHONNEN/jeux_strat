@@ -8,7 +8,7 @@
 
 namespace GameBundle\Repository;
 
-use GameBundle\Repository\Game;
+use GameBundle\Entity\Game;
 
 class GameRepository
 {

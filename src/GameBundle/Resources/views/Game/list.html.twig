@@ -12,7 +12,7 @@
         <tr class="appear-fade">
             <th></th>
             <th onclick="document.location = '{{ url('game_list', {'sort': 'name','order':invertSortMode}) }}'">
-                Name
+                <h1 style="display: inline-block;">Name</h1>
                 <div style="padding: 2px;display: inline-block">
                     {% if sortTarget == "name" and sortMode == "ascend" %}
                         <i class="fa fa-angle-down fa-lg" aria-hidden="true"></i>
@@ -21,9 +21,8 @@
                     {% endif %}
                 </div>
             </th>
-            <th>Description</th>
             <th onclick="document.location = '{{ url('game_list', {'sort': 'rating','order':invertSortMode}) }}'">
-                Review
+                <h1 style="display: inline-block;">Review</h1>
                 <div style="padding: 2px;display: inline-block">
                     {% if sortTarget == "rating" and sortMode == "ascend" %}
                         <i class="fa fa-angle-up fa-lg" aria-hidden="true"></i>
@@ -34,11 +33,19 @@
             </th>
         </tr>
         {% for game in games %}
+            {% set review = (game.sumOfVote / game.numberOfVote) | round(2, 'floor') %}
             <tr class="appear-fade" onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
                 <td><img height="200px" src="{{ asset(game.image) }}"></td>
-                <td style="min-width: 250px"><h2>{{ game.name }}</h2></td>
-                <td><p>{{ game.description }}</p></td>
-                <td width="150px"><h1>{{ (game.sumOfVote / game.numberOfVote) | round(2, 'floor') }} | 10</h1></td>
+                <td><h2>{{ game.name }}</h2>
+                    <p>{{ game.description }}</p></td>
+                <td width="150px" style="text-align: center;"><span {% if review < 3.5 %}class="review-red"
+                                                                    {% elseif review < 6.5 %}class="review-orange"
+                                                                    {% else %}class="review-green"{% endif %}>{{ review }}
+                        | 10</span></td>
+            </tr>
+        {% else %}
+            <tr class="appear-fade">
+                <td colspan="3">No Game Found</td>
             </tr>
         {% endfor %}
     </table>

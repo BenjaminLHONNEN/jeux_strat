@@ -66,3 +66,22 @@ tr:last-child td:last-child{
     border-top-left-radius: 25px;
     color: white;
 }
+
+.review-red{
+    padding: 25px;
+    border-radius: 25px;
+    background-color: red;
+    color: whitesmoke;
+}
+.review-orange{
+    padding: 25px;
+    border-radius: 25px;
+    background-color: orange;
+    color: whitesmoke;
+}
+.review-green{
+    padding: 25px;
+    border-radius: 25px;
+    background-color: green;
+    color: whitesmoke;
+}

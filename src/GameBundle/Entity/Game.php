@@ -6,7 +6,7 @@
  * Time: 21:02
  */
 
-namespace GameBundle\Repository;
+namespace GameBundle\Entity;
 
 class Game
 {
