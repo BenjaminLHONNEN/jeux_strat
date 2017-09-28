@@ -17,6 +17,7 @@ class Game
     private $tags;
     private $sumOfVote;
     private $numberOfVote;
+    private $rating;
 
     function __construct(int $id, string $name, string $description, string $image, string $tags, int $sumOfVote, int $numberOfVote)
     {
@@ -27,6 +28,7 @@ class Game
         $this->tags = $tags;
         $this->sumOfVote = $sumOfVote;
         $this->numberOfVote = $numberOfVote;
+        $this->rating = (float)$sumOfVote / $numberOfVote;
     }
 
     /**
@@ -85,6 +87,11 @@ class Game
         return $this->numberOfVote;
     }
 
-
-
+    /**
+     * @return float
+     */
+    public function getRating(): float
+    {
+        return $this->rating;
+    }
 }

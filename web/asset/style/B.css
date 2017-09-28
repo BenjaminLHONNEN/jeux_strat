@@ -2,7 +2,7 @@
 
 body {
     position: absolute;
-    background-color: #eeeeee;
+    background-color: #efefef;
     margin: 0;
     padding: 0;
 }
@@ -40,8 +40,18 @@ h1, h2, h3, h4, h5, h6 {
     margin: 5px;
 }
 
+a {
+    text-decoration: none;
+    color: #1E90FF;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #104a84;
+}
+
 p, div {
-    font-size: 11px;
+    font-size: 1em;
 }
 
 /*Text*/
@@ -51,7 +61,44 @@ p, div {
 
 /*End Text*/
 
-/*Grid*/
+/* Header */
+.header-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.header-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.header-center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.deskop-header ul{
+    list-style:none;
+}
+.deskop-header li{
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+}
+.mobile-header ul{
+    list-style:none;
+}
+.mobile-header li{
+    display: block;
+    margin-left: 15px;
+    padding: 5px;
+}
+    /* End Header */
+    /*Grid*/
 .grid {
     padding: 5px;
     margin: 2px;
@@ -62,13 +109,14 @@ p, div {
 /*End Grid*/
 /*Slider*/
 @keyframes buttonColorChange {
-    from{
+    from {
         color: #000;
     }
-    to{
+    to {
         color: #fff;
     }
 }
+
 @keyframes slideLeft {
     from {
         display: block;
@@ -83,6 +131,7 @@ p, div {
         display: none;
     }
 }
+
 @keyframes slideRight {
     from {
         display: block;
@@ -97,7 +146,8 @@ p, div {
         display: none;
     }
 }
-.button-slider{
+
+.button-slider {
     display: inline-block;
     z-index: 1001;
     text-align: center;
@@ -106,18 +156,21 @@ p, div {
     border: none;
     background-color: transparent;
     font-size: 50px;
-    animation:buttonColorChange infinite alternate-reverse 5s;
+    animation: buttonColorChange infinite alternate-reverse 5s;
 }
-.button-slider-left{
+
+.button-slider-left {
     position: absolute;
     top: calc(50% - 25px);
     left: 1%;
 }
-.button-slider-right{
+
+.button-slider-right {
     position: absolute;
     top: calc(50% - 25px);
     right: 1%;
 }
+
 .slider {
     position: relative;
     vertical-align: middle;
@@ -125,6 +178,7 @@ p, div {
     overflow: hidden;
     transition: all 2s;
 }
+
 .imageSliderResponsive {
     position: absolute;
     left: 0;
@@ -344,6 +398,14 @@ p, div {
     .mob-box-100 {
         max-width: 98%;
     }
+
+    .deskop-header {
+        display: none;
+    }
+
+    .mobile-header {
+        display: block;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
@@ -425,6 +487,14 @@ p, div {
 
     .tab-box-100 {
         max-width: 98%;
+    }
+
+    .deskop-header {
+        display: none;
+    }
+
+    .mobile-header {
+        display: block;
     }
 }
 
@@ -508,6 +578,14 @@ p, div {
     .small-deskop-box-100 {
         max-width: 98%;
     }
+
+    .deskop-header {
+        display: block;
+    }
+
+    .mobile-header {
+        display: none;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -589,6 +667,14 @@ p, div {
 
     .deskop-box-100 {
         max-width: 98%;
+    }
+
+    .deskop-header {
+        display: block;
+    }
+
+    .mobile-header {
+        display: none;
     }
 }
 
@@ -679,7 +765,6 @@ p, div {
         opacity: 1;
     }
 }
-
 
 @keyframes yBounce {
     0% {
@@ -776,27 +861,27 @@ p, div {
 }
 
 .appear-right {
-    animation: appearRight 1.5s ease-in;
+    animation: appearRight 0.75s ease-in;
 }
 
 .appear-left {
-    animation: appearLeft 1.5s ease-in;
+    animation: appearLeft 0.75s ease-in;
 }
 
 .appear-fade {
-    animation: appearFade 1s ease-in;
+    animation: appearFade 0.75s ease-in;
 }
 
 .disappear-fade {
-    animation: appearFade 1s ease-in reverse;
+    animation: appearFade 0.75s ease-in reverse;
 }
 
 .disappear-left {
-    animation: appearLeft 1s ease-in reverse;
+    animation: appearLeft 0.75s ease-in reverse;
 }
 
 .disappear-right {
-    animation: appearRight 1s ease-in reverse;
+    animation: appearRight 0.75s ease-in reverse;
 }
 
 /*End Animation*/

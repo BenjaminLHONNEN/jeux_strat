@@ -32,8 +32,8 @@ class GameRepository
                 "description" => "Steel Division: Normandy 44 is a Tactical Real-Time Strategy (RTS) game, developed by Eugen Systems, the creators of titles like Wargame and R.U.S.E. This new game puts players in command of detailed, historically accurate tanks, troops, and vehicles at the height of World War II. Steel Division: Normandy 44 allows players to take control over legendary military divisions from six different countries, such as the American 101st Airborne, the German armored 21st Panzer or the 3rd Canadian Division, during the invasion of Normandy in 1944.",
                 "image" => "asset/gamesImage/steelDiv.png",
                 "tags" => "WW2 World War II WWII Grand Strategy Historical Strategy",
-                "sumOfVote" => 50,
-                "numberOfVote" => 5,
+                "sumOfVote" => 33,
+                "numberOfVote" => 8,
             ]
         ];
     }
@@ -47,14 +47,15 @@ class GameRepository
         return $games;
     }
 
-    public function getGameById(int $id): Game
+    public function getGameById(int $id): ?Game
     {
-        $reponse = null;
+        $response = null;
         foreach ($this->games as $game) {
             if($game['id'] === $id){
-                $reponse = new Game($game['id'], $game['name'], $game['description'], $game['image'], $game['tags'], $game['sumOfVote'], $game['numberOfVote']);
+                $response = new Game($game['id'], $game['name'], $game['description'], $game['image'], $game['tags'], $game['sumOfVote'], $game['numberOfVote']);
             }
         }
-        return $reponse;
+
+        return $response;
     }
 }

@@ -9,14 +9,23 @@
     <link rel="stylesheet" href="{{ asset("asset/style/B.css") }}">
     <link rel="stylesheet" href="{{ asset("asset/style/style.css") }}">
 
-
     {% block page_title %}
         <title>Strategy Games Review</title>
     {% endblock %}
 </head>
 <body>
 
-    {% block content '' %}
+<header class="header-center deskop-header appear-fade">
+
+    <ul>
+        <li><h3><a href="{{ url('game_list') }}">Games List</a></h3></li>
+        <li><h3><a href="{{ url('game_list') }}">Games List</a></h3></li>
+        <li><h3><a href="{{ url('game_list') }}">Games List</a></h3></li>
+    </ul>
+
+</header>
+
+{% block content '' %}
 
 </body>
 </html>

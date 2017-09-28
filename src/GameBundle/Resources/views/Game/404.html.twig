@@ -1,0 +1,11 @@
+{% extends 'template/defaultTemplate.html.twig' %}
+
+{% block page_title %}<title>404 Game not Found</title>{% endblock %}
+
+{% block content %}
+    <div style="width: 100%;text-align: center;">
+        <h1> 404 Game not Found</h1>
+        <p><a href="{{ url('game_list') }}"> >>> Games List <<< </a></p>
+        <img src="{{ asset("asset/images/404.gif") }}">
+    </div>
+{% endblock %}

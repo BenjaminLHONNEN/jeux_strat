@@ -1,21 +1,24 @@
-
 {% extends 'template/defaultTemplate.html.twig' %}
 
 {% block page_title %}<title> Game List </title>{% endblock %}
 
 {% block content %}
+
     {{ dump(games) }}
+    {{ dump(sortTarget) }}
+    {{ dump(sortMode) }}
+
     <table>
-        <tr>
+        <tr class="appear-fade">
             <th></th>
             <th>Title</th>
             <th>Description</th>
             <th>Review</th>
         </tr>
         {% for game in games %}
-            <tr onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
+            <tr class="appear-fade" onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
                 <td><img height="200px" src="{{ asset(game.image) }}"></td>
-                <td><h2>{{ game.name }}</h2></td>
+                <td style="min-width: 250px"><h2>{{ game.name }}</h2></td>
                 <td><p>{{ game.description }}</p></td>
                 <td width="150px"><h1>{{ (game.sumOfVote / game.numberOfVote) | round(2, 'floor') }} | 10</h1></td>
             </tr>
