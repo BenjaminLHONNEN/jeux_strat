@@ -35,12 +35,18 @@ class ListController extends Controller
 
     private function sortByGameNameAscend(Game $a, Game $b)
     {
-        return strcmp($a, $b);
+        if ($a->getName()[0] == $b->getName()[0]) {
+            return 0;
+        }
+        return ($a->getName()[0] < $b->getName()[0]) ? -1 : 1;
     }
 
     private function sortByGameNameDescend(Game $a, Game $b)
     {
-        return strcmp($a, $b);
+        if ($a->getName()[0] == $b->getName()[0]) {
+            return 0;
+        }
+        return ($a->getName()[0] > $b->getName()[0]) ? -1 : 1;
     }
 
     /**
@@ -56,16 +62,29 @@ class ListController extends Controller
 
         if ($sortTarget === "rating") {
             if ($sortMode === "ascend") {
-                uasort($games, array($this, 'sortRatingAscend'));
+                uasort($games, array($this, 'sortByGameRatingAscend'));
             } else {
-                uasort($games, array($this, 'sortRatingDescend'));
+                uasort($games, array($this, 'sortByGameRatingDescend'));
             }
+        }else if ($sortTarget === "name") {
+            if ($sortMode === "ascend") {
+                uasort($games, array($this, 'sortByGameNameAscend'));
+            } else {
+                uasort($games, array($this, 'sortByGameNameDescend'));
+            }
+        }
+
+        if($sortMode === "ascend"){
+            $invertSortMode = "descend";
+        } else {
+            $invertSortMode = "ascend";
         }
 
         return $this->render('GameBundle:Game:list.html.twig', [
             "games" => $games,
             "sortTarget" => $sortTarget,
             "sortMode" => $sortMode,
+            "invertSortMode" => $invertSortMode,
         ]);
     }
 
@@ -75,6 +94,6 @@ class ListController extends Controller
      */
     public function defaultAction()
     {
-        return $this->indexAction(null);
+        return $this->indexAction(new Request());
     }
 }
