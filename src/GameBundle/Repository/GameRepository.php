@@ -14,9 +14,4 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
 
 class GameRepository extends EntityRepository
-{
-    function __construct(EntityManager $em, Mapping\ClassMetadata $class)
-    {
-        parent::__construct($em, $class);
-    }
-}
+{}

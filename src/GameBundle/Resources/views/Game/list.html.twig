@@ -33,7 +33,7 @@
             </th>
         </tr>
         {% for game in games %}
-            {% set review = (game.sumOfVote / game.numberOfVote) | round(2, 'floor') %}
+            {% set review = game.rating | round(2, 'floor') %}
             <tr class="appear-fade" onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
                 <td><img height="200px" src="{{ asset(game.image) }}"></td>
                 <td><h2>{{ game.name }}</h2>

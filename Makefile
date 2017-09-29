@@ -12,3 +12,12 @@ autoload-refresh:
 
 create-bundle:
 	bin/console generate:bundle
+
+comp-install:
+	php composer.phar install
+
+fixtures:
+	bin/console doctrine:database:drop --force --if-exists
+	bin/console doctrine:database:create
+	bin/console doctrine:schema:update --force
+	bin/console games:fixtures

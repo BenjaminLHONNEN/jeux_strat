@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GameBundle\Repository\GameRepository;
+use GameBundle\Entity\Game;
 
 class DetailController extends Controller
 {
@@ -20,8 +21,10 @@ class DetailController extends Controller
      */
     public function indexAction(int $gameId)
     {
-        $gameRepository = new GameRepository();
-        $game = $gameRepository->getGameById($gameId);
+//        $gameRepository = new GameRepository();
+//        $game = $gameRepository->getGameById($gameId);
+        $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
+        $game = $gameRepository->find($gameId);
         if ($game !== null) {
             return $this->render('GameBundle:Game:detail.html.twig', [
                 "game" => $game,

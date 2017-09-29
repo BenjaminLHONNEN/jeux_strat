@@ -55,8 +55,8 @@ class ListController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $gameRepository = $this->getDoctrine()->getManager("GameRepository");
-        $games = $gameRepository->getAllGames();
+        $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
+        $games = $gameRepository->findAll();
 
         $sortTarget = $request->get('sort', 'none');
         $sortMode = $request->get('order', 'none');

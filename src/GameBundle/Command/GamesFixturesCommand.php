@@ -25,6 +25,7 @@ class GamesFixturesCommand extends ContainerAwareCommand
         $output->writeln('');
         $output->writeln('');
 
+
         $toAdd = [
             [
                 "name" => "Hearts of Iron IV",
