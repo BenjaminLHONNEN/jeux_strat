@@ -8,36 +8,15 @@
 
 namespace GameBundle\Repository;
 
+use Doctrine\ORM\Mapping;
 use GameBundle\Entity\Game;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityManager;
 
-class GameRepository
+class GameRepository extends EntityRepository
 {
-    private $games;
-
-    function __construct()
+    function __construct(EntityManager $em, Mapping\ClassMetadata $class)
     {
-        $json = file_get_contents('games.json');
-        $this ->games = json_decode($json, true);
-    }
-
-    public function getAllGames(): array
-    {
-        $games = [];
-        foreach ($this->games as $game) {
-            array_push($games,new Game($game['id'], $game['name'], $game['description'], $game['image'], $game['tags'], $game['sumOfVote'], $game['numberOfVote']));
-        }
-        return $games;
-    }
-
-    public function getGameById(int $id): ?Game
-    {
-        $response = null;
-        foreach ($this->games as $game) {
-            if($game['id'] === $id){
-                $response = new Game($game['id'], $game['name'], $game['description'], $game['image'], $game['tags'], $game['sumOfVote'], $game['numberOfVote']);
-            }
-        }
-
-        return $response;
+        parent::__construct($em, $class);
     }
 }

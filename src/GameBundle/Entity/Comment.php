@@ -1,12 +1,4 @@
-
 <?php
-/**
- * Created by PhpStorm.
- * User: probe
- * Date: 26/09/2017
- * Time: 22:13
- */
-
 namespace GameBundle\Entity;
 
 class Comment

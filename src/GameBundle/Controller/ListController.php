@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GameBundle\Repository\GameRepository;
 use GameBundle\Entity\Game;
+use Doctrine\ORM\EntityManagerInterface;
 
 
 class ListController extends Controller
@@ -54,7 +55,7 @@ class ListController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $gameRepository = new GameRepository();
+        $gameRepository = $this->getDoctrine()->getManager("GameRepository");
         $games = $gameRepository->getAllGames();
 
         $sortTarget = $request->get('sort', 'none');
