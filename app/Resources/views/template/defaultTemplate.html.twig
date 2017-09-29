@@ -25,8 +25,8 @@
     </ul>
 
     <ul id="button-header-desktop">
-        <li><button class="button-6-4 hover-shake">sign in</button></li>
-        <li><button class="button-6-4 hover-shake">sign up</button></li>
+        <li><button class="button-6-4 hover-shake pointer" onclick="document.location = '{{ url('sign', {'typeOfSign': "in"}) }}'">sign in</button></li>
+        <li><button class="button-6-4 hover-shake pointer" onclick="document.location = '{{ url('sign', {'typeOfSign': "up"}) }}'">sign up</button></li>
     </ul>
 
 </header>

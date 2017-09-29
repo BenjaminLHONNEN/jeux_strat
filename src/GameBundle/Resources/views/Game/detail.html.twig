@@ -4,6 +4,7 @@
 
 {% block content %}
     <a href="{{ url('game_list') }}"></a>
+    <h1>Game :</h1>
     <table class="appear-fade">
         <tr>
             <th></th>
@@ -16,6 +17,19 @@
             <td style="min-width: 250px"><h2>{{ game.name }}</h2></td>
             <td><p>{{ game.description }}</p></td>
             <td width="150px"><h1>{{ (game.sumOfVote / game.numberOfVote) | round(2, 'floor') }} | 10</h1></td>
+        </tr>
+    </table>
+    <h1>Comment :</h1>
+    <table class="appear-fade">
+        <tr>
+            <th>User name :</th>
+            <th>Comment</th>
+            <th>Note :</th>
+        </tr>
+        <tr>
+            <td><h2>Html pure</h2></td>
+            <td><p>Ce n'est pas du php pour l'instant bla bla bla bla bla bla bla bla bla</p></td>
+            <td width="150px"><h1>8</h1></td>
         </tr>
     </table>
 {% endblock %}

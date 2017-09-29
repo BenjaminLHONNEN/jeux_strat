@@ -66,7 +66,16 @@ tr:last-child td:last-child{
     border-top-left-radius: 25px;
     color: white;
 }
-
+.buttonValidateFormulaire{
+    display: block;
+    float: right;
+}
+.textSign{
+    margin-top: 15px;
+}
+.pointer{
+    cursor: pointer;
+}
 .review-red{
     padding: 25px;
     border-radius: 25px;

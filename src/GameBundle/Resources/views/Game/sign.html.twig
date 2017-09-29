@@ -3,13 +3,27 @@
 {% block page_title %}<title></title>{% endblock %}
 
 {% block content %}
-    {% if typeOfSign == 'up' %}
+    {% if typeOfSign == 'in' %}
         <h1 class="divSignTitle">Connect</h1>
         <div class="divSign">
-            <h2>Mail adress:</h2>
+            <h2 class="textSign">Mail adress:</h2>
             <input type="text"> <br>
-            <h2>Password</h2>
+            <h2 class="textSign">Password</h2>
             <input type="text">
+            <button class="button-6-1 hover-shake pointer buttonValidateFormulaire">Validate</button>
+        </div>
+    {% elseif typeOfSign == 'up' %}
+        <h1 class="divSignTitle">Register</h1>
+        <div class="divSign">
+            <h2 class="textSign">Mail adress:</h2>
+            <input type="text"> <br>
+            <h2 class="textSign">Nickname:</h2>
+            <input type="text"> <br>
+            <h2 class="textSign">Last name:</h2>
+            <input type="text"> <br>
+            <h2 class="textSign">Password :</h2>
+            <input type="text"><br>
+            <button class="button-6-1 hover-shake pointer buttonValidateFormulaire">Validate</button>
         </div>
     {% endif %}
 {% endblock %}
