@@ -58,8 +58,54 @@ p, div {
 .text-muted {
     color: #888888;
 }
-
 /*End Text*/
+
+/* Alerts */
+.alert-green,.alert-green-inverted,
+.alert-red,.alert-red-inverted,
+.alert-orange,.alert-orange-inverted,
+.alert-gray,.alert-gray-inverted{
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+.alert-green{
+    color: whitesmoke;
+    background-color: green;
+}
+.alert-red{
+    color: whitesmoke;
+    background-color: red;
+}
+.alert-orange{
+    color: whitesmoke;
+    background-color: orange;
+}
+.alert-gray{
+    color: whitesmoke;
+    background-color: gray;
+}
+.alert-green-inverted{
+    color: green;
+    border: solid 1px green;
+    background-color: whitesmoke;
+}
+.alert-red-inverted{
+    color: red;
+    border: solid 1px red;
+    background-color: whitesmoke;
+}
+.alert-orange-inverted{
+    color: orange;
+    border: solid 1px orange;
+    background-color: whitesmoke;
+}
+.alert-gray-inverted{
+    color: gray;
+    border: solid 1px gray;
+    background-color: whitesmoke;
+}
+/*End Alerts*/
 
 /* Header */
 .header-right {

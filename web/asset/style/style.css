@@ -28,13 +28,15 @@ th{
 }
 td {
     background-color: white;
-    cursor: pointer;
 }
 th,td{
     padding: 15px;
 }
 table{
     border-collapse: collapse;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 th:first-child{
     border-top-left-radius: 25px;
@@ -54,10 +56,21 @@ tr:last-child td:first-child{
 tr:last-child td:last-child{
     border-bottom-right-radius: 25px;
 }
+.link,.linkGamelist{
+    cursor: pointer;
+}
+.linkGamelist:hover td {
+    cursor: pointer;
+    background-color: #dedede;
+}
 #button-header-desktop{
     position: fixed;
     right: 0%;
     top: 0%;
+}
+.image{
+    max-height: 200px;
+    max-width: 200px;
 }
 .divSignTitle{
     padding: 15px;
@@ -70,11 +83,15 @@ tr:last-child td:last-child{
     display: block;
     float: right;
 }
+.gameNote{
+    width: 150px;
+}
+.tdUser{
+    width:200px;
+    text-align: center;
+}
 .textSign{
     margin-top: 15px;
-}
-.pointer{
-    cursor: pointer;
 }
 .review-red{
     padding: 25px;

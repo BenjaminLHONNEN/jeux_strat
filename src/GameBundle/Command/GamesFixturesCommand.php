@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use GameBundle\Entity\Game;
+use GameBundle\Entity\Comment;
+use GameBundle\Entity\User;
 
 class GamesFixturesCommand extends ContainerAwareCommand
 {
@@ -26,7 +28,7 @@ class GamesFixturesCommand extends ContainerAwareCommand
         $output->writeln('');
 
 
-        $toAdd = [
+        $gamesToAdd = [
             [
                 "name" => "Hearts of Iron IV",
                 "description" => "Victory is at your fingertips! Your ability to lead your nation is your supreme weapon, the strategy game Hearts of Iron IV lets you take command of any nation in World War II; the most engaging conflict in world history. From the heart of the battlefield to the command center, you will guide your nation to glory and wage war, negotiate or invade. You hold the power to tip the very balance of WWII. It is time to show your ability as the greatest military leader in the world. Will you relive or change history? Will you change the fate of the world by achieving victory at all costs?",
@@ -40,25 +42,61 @@ class GamesFixturesCommand extends ContainerAwareCommand
                 "tags" => "WW2 World War II WWII Grand Strategy Historical Strategy",
             ],
         ];
+        $userToAdd = [
+            [
+                "pseudo" => "bnj",
+                "mail" => "benjamin.lhonnen@ynov.com",
+                "password" => "1234",
+                "imageLink" => "./asset/userImages/1.gif",
+                "role" => "admin",
+            ],
+            [
+                "pseudo" => "Ulric",
+                "mail" => "emeric.lesault@ynov.com",
+                "password" => "1234",
+                "imageLink" => "./asset/userImages/2.png",
+                "role" => "admin",
+            ],
+        ];
+
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        foreach ($toAdd as $game) {
-            $output->writeln('<info>Adding : </info>');
+        foreach ($gamesToAdd as $game) {
+            $output->writeln('<info>Adding Game : </info>');
             $output->write("<info>      ");
             $output->write($game["name"]);
             $output->writeln("</info>");
+
             $newGame = new Game();
-            $newGame->setName($game["name"]);
-            $newGame->setDescription($game["description"]);
-            $newGame->setImage($game["image"]);
-            $newGame->setTags($game["tags"]);
-            $newGame->setSumOfVote(0);
-            $newGame->setNumberOfVote(0);
-            $newGame->setRating(0);
+            $newGame->setName($game["name"])
+                ->setDescription($game["description"])
+                ->setImage($game["image"])
+                ->setTags($game["tags"])
+                ->setSumOfVote(0)
+                ->setNumberOfVote(0)
+                ->setRating(0);
             $em->persist($newGame);
-            $newGame = new Game();
+
             $output->write("<info>");
             $output->write($game["name"]);
+            $output->writeln(" has been added</info>\n\n");
+        }
+        foreach ($userToAdd as $user) {
+            $output->writeln('<info>Adding User : </info>');
+            $output->write("<info>      ");
+            $output->write($user["pseudo"]);
+            $output->writeln("</info>");
+
+            $newuser = new User();
+            $newuser->setPseudo($user["pseudo"])
+                ->setMail($user["mail"])
+                ->setPassword($user["password"])
+                ->setImageLink($user["imageLink"])
+                ->setRole($user["role"]);
+            $em->persist($newuser);
+
+            $output->write("<info>");
+            $output->write($user["pseudo"]);
             $output->writeln(" has been added</info>\n\n");
         }
 

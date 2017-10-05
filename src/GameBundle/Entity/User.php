@@ -24,6 +24,13 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="pseudo", type="string", length=255)
+     */
+    private $pseudo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="mail", type="string", length=255)
      */
     private $mail;
@@ -31,23 +38,23 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="nickname", type="string", length=255)
-     */
-    private $nickname;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string", length=255)
-     */
-    private $lastname;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageLink", type="string", length=255)
+     */
+    private $imageLink;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=255)
+     */
+    private $role;
 
 
     /**
@@ -58,6 +65,30 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set pseudo
+     *
+     * @param string $pseudo
+     *
+     * @return User
+     */
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * Get pseudo
+     *
+     * @return string
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
     }
 
     /**
@@ -85,54 +116,6 @@ class User
     }
 
     /**
-     * Set nickname
-     *
-     * @param string $nickname
-     *
-     * @return User
-     */
-    public function setNickname($nickname)
-    {
-        $this->nickname = $nickname;
-
-        return $this;
-    }
-
-    /**
-     * Get nickname
-     *
-     * @return string
-     */
-    public function getNickname()
-    {
-        return $this->nickname;
-    }
-
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     *
-     * @return User
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -154,6 +137,54 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set imageLink
+     *
+     * @param string $imageLink
+     *
+     * @return User
+     */
+    public function setImageLink($imageLink)
+    {
+        $this->imageLink = $imageLink;
+
+        return $this;
+    }
+
+    /**
+     * Get imageLink
+     *
+     * @return string
+     */
+    public function getImageLink()
+    {
+        return $this->imageLink;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     *
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }
 

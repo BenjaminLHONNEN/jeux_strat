@@ -3,33 +3,50 @@
 {% block page_title %}<title>{{ game.name }}</title>{% endblock %}
 
 {% block content %}
-    <a href="{{ url('game_list') }}"></a>
-    <h1>Game :</h1>
+    <a href="{{ url('game_list') }}"> >>> Return to the Game List <<< </a>
     <table class="appear-fade">
         <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Review</th>
+            <th colspan="3"> Game :</th>
         </tr>
         <tr>
-            <td><img height="200px" src="{{ asset(game.image) }}"></td>
-            <td style="min-width: 250px"><h2>{{ game.name }}</h2></td>
-            <td><p>{{ game.description }}</p></td>
-            <td width="150px"><h1>{{ game.rating | round(2, 'floor') }} | 10</h1></td>
+            <td><img class="image" src="{{ asset(game.image) }}"></td>
+            <td>
+                <h2>{{ game.name }}</h2>
+                <p>{{ game.description }}</p>
+            </td>
+            <td class="gameNote"><h1>{{ game.rating | round(2, 'floor') }} | 10</h1></td>
         </tr>
     </table>
     <h1>Comment :</h1>
+
+
+    {% if isCommentSave %}
+        <p class="alert-green"> Merci de votre commentaire ! </p>
+    {% endif %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
     <table class="appear-fade">
         <tr>
-            <th>User name :</th>
-            <th>Comment</th>
-            <th>Note :</th>
+            <th colspan="3"><h1>Comments : </h1></th>
         </tr>
-        <tr>
-            <td><h2>Html pure</h2></td>
-            <td><p>Ce n'est pas du php pour l'instant bla bla bla bla bla bla bla bla bla</p></td>
-            <td width="150px"><h1>8</h1></td>
-        </tr>
+        {% for comment in commentsArray %}
+            <tr>
+                <td class="tdUser">
+                    <img class="image" src="{{ asset(comment.userClass.imageLink) }}">
+                    <h2>{{ comment.userClass.pseudo }}</h2>
+                </td>
+                <td><h3>{{ comment.commentClass.comment }}</h3></td>
+                <td class="gameNote"><h1>{{ comment.commentClass.note }}</h1></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td><h3>No Comment For this Game ! Be the first to let one.</h3></td>
+            </tr>
+        {% endfor %}
     </table>
 {% endblock %}

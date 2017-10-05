@@ -11,7 +11,7 @@
     <table>
         <tr class="appear-fade">
             <th></th>
-            <th onclick="document.location = '{{ url('game_list', {'sort': 'name','order':invertSortMode}) }}'">
+            <th class="link" onclick="document.location = '{{ url('game_list', {'sort': 'name','order':invertSortMode}) }}'">
                 <h1 style="display: inline-block;">Name</h1>
                 <div style="padding: 2px;display: inline-block">
                     {% if sortTarget == "name" and sortMode == "ascend" %}
@@ -21,7 +21,7 @@
                     {% endif %}
                 </div>
             </th>
-            <th onclick="document.location = '{{ url('game_list', {'sort': 'rating','order':invertSortMode}) }}'">
+            <th class="link" onclick="document.location = '{{ url('game_list', {'sort': 'rating','order':invertSortMode}) }}'">
                 <h1 style="display: inline-block;">Review</h1>
                 <div style="padding: 2px;display: inline-block">
                     {% if sortTarget == "rating" and sortMode == "ascend" %}
@@ -34,8 +34,8 @@
         </tr>
         {% for game in games %}
             {% set review = game.rating | round(2, 'floor') %}
-            <tr class="appear-fade" onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
-                <td><img height="200px" src="{{ asset(game.image) }}"></td>
+            <tr class="appear-fade linkGamelist" onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
+                <td><img class="image" src="{{ asset(game.image) }}"></td>
                 <td><h2>{{ game.name }}</h2>
                     <p>{{ game.description }}</p></td>
                 <td width="150px" style="text-align: center;"><span {% if review < 3.5 %}class="review-red"
