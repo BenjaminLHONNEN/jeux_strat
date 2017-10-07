@@ -37,7 +37,7 @@ class DetailController extends Controller
         $form = $this->createFormBuilder($comment)
             ->add('gameId', HiddenType::class, array("data" => $gameId))
             ->add('userId', HiddenType::class, array("data" => "1"))
-            ->add('note', NumberType::class, array("label" => "Note : "))
+            ->add('note', HiddenType::class)
             ->add('comment', TextareaType::class, array("label" => "Comment : "))
             ->add('save', SubmitType::class, array('label' => 'Send Comment'))
             ->getForm();
@@ -65,7 +65,7 @@ class DetailController extends Controller
         $userRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\User");
 
         $commentsObject = [];
-        foreach ($comments as $comment){
+        foreach ($comments as $comment) {
             $object = [];
             $object['commentClass'] = $comment;
             $object['userClass'] = $userRepository->find($comment->getUserId());

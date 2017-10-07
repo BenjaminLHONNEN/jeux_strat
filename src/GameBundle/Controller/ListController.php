@@ -18,61 +18,31 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ListController extends Controller
 {
-    function sortByGameRatingAscend(Game $a, Game $b)
-    {
-        if ($a->getRating() == $b->getRating()) {
-            return 0;
-        }
-        return ($a->getRating() < $b->getRating()) ? -1 : 1;
-    }
-
-    function sortByGameRatingDescend(Game $a, Game $b)
-    {
-        if ($a->getRating() == $b->getRating()) {
-            return 0;
-        }
-        return ($a->getRating() > $b->getRating()) ? -1 : 1;
-    }
-
-    private function sortByGameNameAscend(Game $a, Game $b)
-    {
-        if ($a->getName()[0] == $b->getName()[0]) {
-            return 0;
-        }
-        return ($a->getName()[0] < $b->getName()[0]) ? -1 : 1;
-    }
-
-    private function sortByGameNameDescend(Game $a, Game $b)
-    {
-        if ($a->getName()[0] == $b->getName()[0]) {
-            return 0;
-        }
-        return ($a->getName()[0] > $b->getName()[0]) ? -1 : 1;
-    }
-
     /**
      * @Route("/game/list", name="game_list")
      */
     public function indexAction(Request $request)
     {
         $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
-        $games = $gameRepository->findAll();
 
         $sortTarget = $request->get('sort', 'none');
         $sortMode = $request->get('order', 'none');
 
         if ($sortTarget === "rating") {
             if ($sortMode === "ascend") {
-                uasort($games, array($this, 'sortByGameRatingAscend'));
+                $games = $gameRepository->findBy([], ['rating' => 'ASC']);
             } else {
-                uasort($games, array($this, 'sortByGameRatingDescend'));
+                $games = $gameRepository->findBy([], ['rating' => 'DESC']);
             }
         }else if ($sortTarget === "name") {
             if ($sortMode === "ascend") {
-                uasort($games, array($this, 'sortByGameNameAscend'));
+                $games = $gameRepository->findBy([], ['name' => 'ASC']);
             } else {
-                uasort($games, array($this, 'sortByGameNameDescend'));
+                $games = $gameRepository->findBy([], ['name' => 'DESC']);
             }
+        } else {
+
+            $games = $gameRepository->findAll();
         }
 
         if($sortMode === "ascend"){

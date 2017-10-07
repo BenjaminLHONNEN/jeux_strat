@@ -111,3 +111,28 @@ tr:last-child td:last-child{
     background-color: green;
     color: whitesmoke;
 }
+
+#notePreview{
+    display: inline-block;
+    color: whitesmoke;
+}
+.star{
+    display: inline-block;
+    margin: 5px;
+    color: yellow;
+    padding: 0;
+}
+.starParent{
+    cursor: pointer;
+    display: inline-block;
+    background-color: #313131;
+    border-radius: 10px;
+    padding: 5px;
+
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+
