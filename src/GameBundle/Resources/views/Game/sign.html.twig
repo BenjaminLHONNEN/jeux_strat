@@ -1,29 +1,28 @@
 {% extends 'template/defaultTemplate.html.twig' %}
 
-{% block page_title %}<title></title>{% endblock %}
+{% block page_title %}<title>Sign {{ typeOfSign }}</title>{% endblock %}
 
 {% block content %}
-    {% if typeOfSign == 'in' %}
-        <h1 class="divSignTitle">Connect</h1>
-        <div class="divSign">
+    <h1 class="divSignTitle">Sign {{ typeOfSign }}</h1>
+    <div class="divSign">
+        {% if typeOfSign == 'in' %}
             <h2 class="textSign">Mail adress:</h2>
             <input type="text"> <br>
             <h2 class="textSign">Password</h2>
             <input type="text">
-            <button class="button-6-1 hover-shake pointer buttonValidateFormulaire">Validate</button>
-        </div>
-    {% elseif typeOfSign == 'up' %}
-        <h1 class="divSignTitle">Register</h1>
-        <div class="divSign">
+            <div class="divButtonsForm">
+                <button class="button-6-1 hover-shake pointer">Validate</button>
+            </div>
+        {% elseif typeOfSign == 'up' %}
             <h2 class="textSign">Mail adress:</h2>
             <input type="text"> <br>
             <h2 class="textSign">Nickname:</h2>
             <input type="text"> <br>
-            <h2 class="textSign">Last name:</h2>
-            <input type="text"> <br>
             <h2 class="textSign">Password :</h2>
             <input type="text"><br>
-            <button class="button-6-1 hover-shake pointer buttonValidateFormulaire">Validate</button>
-        </div>
-    {% endif %}
+            <div class="divButtonsForm">
+                <button class="button-6-1 hover-shake pointer">Validate</button>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

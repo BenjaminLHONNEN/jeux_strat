@@ -35,8 +35,6 @@ class DetailController extends Controller
 
 
         $form = $this->createFormBuilder($comment)
-            ->add('gameId', HiddenType::class, array("data" => $gameId))
-            ->add('userId', HiddenType::class, array("data" => "1"))
             ->add('note', HiddenType::class)
             ->add('comment', TextareaType::class, array("label" => "Comment : "))
             ->add('save', SubmitType::class, array('label' => 'Send Comment'))
@@ -50,9 +48,14 @@ class DetailController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
+
             $game->setNumberOfVote($game->getNumberOfVote() + 1);
             $game->setSumOfVote($game->getSumOfVote() + $comment->getNote());
             $game->setRating($game->getSumOfVote() / $game->getNumberOfVote());
+
+            $comment->setGameId($gameId);
+            $comment->setUserId("1");
+
             $em->persist($comment);
             $em->persist($game);
             $em->flush();

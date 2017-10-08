@@ -65,6 +65,7 @@ tr:last-child td:last-child{
 }
 #button-header-desktop{
     position: fixed;
+    margin: 11px;
     right: 0%;
     top: 0%;
 }
@@ -78,10 +79,25 @@ tr:last-child td:last-child{
     border-top-right-radius: 25px;
     border-top-left-radius: 25px;
     color: white;
+    margin-bottom: 0;
 }
-.buttonValidateFormulaire{
+.divSign{
     display: block;
-    float: right;
+    background-color: white;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 20px;
+    margin: 5px;
+    margin-top: 0;
+}
+.divButtonsForm{
+    text-align: right;
+}
+.divButtonsForm button{
+    display: inline-block;
+}
+.pointer {
+    cursor: pointer;
 }
 .gameNote{
     width: 150px;
@@ -89,9 +105,6 @@ tr:last-child td:last-child{
 .tdUser{
     width:200px;
     text-align: center;
-}
-.textSign{
-    margin-top: 15px;
 }
 .review-red{
     padding: 25px;
