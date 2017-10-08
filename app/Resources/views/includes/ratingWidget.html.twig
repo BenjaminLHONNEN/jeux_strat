@@ -36,10 +36,8 @@
     function activateHover(event) {
         for (var div in event.path) {
             if (event.path[div].className === "star") {
-                if(event.buttons > 0){
-                    onStarMouseClick(event.path[div]);
-                }
                 $('#notePreview')[0].innerHTML = (parseInt(event.path[div].dataset.number) + 1) + " | 10";
+                onStarMouseClick(event.path[div]);
                 for (var y = 0; y <= 9; y++) {
                     if (y <= event.path[div].dataset.number) {
                         $('#star' + y)[0].innerHTML = "<i class=\"fa fa-star\" aria-hidden=\"true\"></i>";
