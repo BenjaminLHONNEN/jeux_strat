@@ -5,24 +5,6 @@
 {% block content %}
     <h1 class="divSignTitle">Sign {{ typeOfSign }}</h1>
     <div class="divSign">
-        {% if typeOfSign == 'in' %}
-            <h2 class="textSign">Mail adress:</h2>
-            <input type="text"> <br>
-            <h2 class="textSign">Password</h2>
-            <input type="text">
-            <div class="divButtonsForm">
-                <button class="button-6-1 hover-shake pointer">Validate</button>
-            </div>
-        {% elseif typeOfSign == 'up' %}
-            <h2 class="textSign">Mail adress:</h2>
-            <input type="text"> <br>
-            <h2 class="textSign">Nickname:</h2>
-            <input type="text"> <br>
-            <h2 class="textSign">Password :</h2>
-            <input type="text"><br>
-            <div class="divButtonsForm">
-                <button class="button-6-1 hover-shake pointer">Validate</button>
-            </div>
-        {% endif %}
+        
     </div>
 {% endblock %}

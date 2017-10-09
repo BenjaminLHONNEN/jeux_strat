@@ -31,7 +31,7 @@ class Game
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=3000)
+     * @ORM\Column(name="description", type="string", length=2500)
      */
     private $description;
 
@@ -43,32 +43,18 @@ class Game
     private $image;
 
     /**
-     * @var string
+     * @var array
      *
-     * @ORM\Column(name="tags", type="string", length=255)
+     * @ORM\Column(name="tags", type="simple_array")
      */
     private $tags;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="sumOfVote", type="integer")
-     */
-    private $sumOfVote;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="numberOfVote", type="integer")
-     */
-    private $numberOfVote;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="rating", type="integer")
-     */
-    private $rating;
+    * @var ratings
+    *
+    * @ORM\OneToMany(targetEntity="Rating", mappedBy="game")
+    */
+    private $ratings;
 
 
     /**
@@ -156,7 +142,7 @@ class Game
     /**
      * Set tags
      *
-     * @param string $tags
+     * @param array $tags
      *
      * @return Game
      */
@@ -170,7 +156,7 @@ class Game
     /**
      * Get tags
      *
-     * @return string
+     * @return array
      */
     public function getTags()
     {
@@ -178,75 +164,41 @@ class Game
     }
 
     /**
-     * Set sumOfVote
-     *
-     * @param integer $sumOfVote
-     *
-     * @return Game
-     */
-    public function setSumOfVote($sumOfVote)
+    * Set ratingIds
+    *
+    * @param array $ratings
+    *
+    * @return Rating
+    */
+    public function setRatings($ratings)
     {
-        $this->sumOfVote = $sumOfVote;
-
+        $this->ratings = $ratings;
         return $this;
     }
 
+
     /**
-     * Get sumOfVote
-     *
-     * @return int
-     */
-    public function getSumOfVote()
+    * Get ratings
+    *
+    * @return array
+    */
+    public function getRatings()
     {
-        return $this->sumOfVote;
+        return $this->ratings;
     }
 
-    /**
-     * Set numberOfVote
-     *
-     * @param integer $numberOfVote
-     *
-     * @return Game
-     */
-    public function setNumberOfVote($numberOfVote)
+    public function getAverageRating()
     {
-        $this->numberOfVote = $numberOfVote;
-
-        return $this;
-    }
-
-    /**
-     * Get numberOfVote
-     *
-     * @return int
-     */
-    public function getNumberOfVote()
-    {
-        return $this->numberOfVote;
-    }
-
-    /**
-     * Set rating
-     *
-     * @param integer $rating
-     *
-     * @return Game
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-
-        return $this;
-    }
-
-    /**
-     * Get rating
-     *
-     * @return int
-     */
-    public function getRating()
-    {
-        return $this->rating;
+        $sumOfVote = 0;
+        $numberOfVote = 0;
+        foreach ($this->ratings as $rating){
+            $numberOfVote++;
+            $sumOfVote += $rating->getNote();
+        }
+        if ($numberOfVote === 0){
+            $numberOfVote = 1;
+        }
+        return $sumOfVote/$numberOfVote;
     }
 }
 

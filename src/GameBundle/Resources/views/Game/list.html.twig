@@ -3,7 +3,6 @@
 {% block page_title %}<title> Game List </title>{% endblock %}
 
 {% block content %}
-
     <table>
         <tr class="appear-fade">
             <th></th>
@@ -31,7 +30,7 @@
             </th>
         </tr>
         {% for game in games %}
-            {% set review = game.rating | round(2, 'floor') %}
+            {% set review = game.getAverageRating() | round(2, 'floor') %}
             <tr class="appear-fade linkGamelist"
                 onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
                 <td><img class="image" src="{{ asset(game.image) }}"></td>

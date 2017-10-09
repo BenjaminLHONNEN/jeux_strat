@@ -5,12 +5,12 @@ namespace GameBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Comment
+ * Rating
  *
- * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="GameBundle\Repository\CommentRepository")
+ * @ORM\Table(name="rating")
+ * @ORM\Entity(repositoryClass="GameBundle\Repository\RatingRepository")
  */
-class Comment
+class Rating
 {
     /**
      * @var int
@@ -45,9 +45,17 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=255)
+     * @ORM\Column(name="comment", type="string", length=1500)
      */
     private $comment;
+
+    /**
+     * @var Game
+     *
+     * @ORM\ManyToOne(targetEntity="Game", inversedBy="ratings")
+     * @ORM\JoinColumn(name="gameId", referencedColumnName="id")
+     */
+    private $game;
 
 
     /**
@@ -61,35 +69,11 @@ class Comment
     }
 
     /**
-     * Set gameId
-     *
-     * @param integer $gameId
-     *
-     * @return Comment
-     */
-    public function setGameId($gameId)
-    {
-        $this->gameId = $gameId;
-
-        return $this;
-    }
-
-    /**
-     * Get gameId
-     *
-     * @return int
-     */
-    public function getGameId()
-    {
-        return $this->gameId;
-    }
-
-    /**
      * Set userId
      *
      * @param integer $userId
      *
-     * @return Comment
+     * @return Rating
      */
     public function setUserId($userId)
     {
@@ -113,7 +97,7 @@ class Comment
      *
      * @param integer $note
      *
-     * @return Comment
+     * @return Rating
      */
     public function setNote($note)
     {
@@ -137,7 +121,7 @@ class Comment
      *
      * @param string $comment
      *
-     * @return Comment
+     * @return Rating
      */
     public function setComment($comment)
     {
@@ -154,6 +138,29 @@ class Comment
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+    * Set game
+    *
+    * @param Game $game
+    *
+    * @return Game
+    */
+    public function setGame($game)
+    {
+        $this->game = $game;
+        return $this;
+    }
+
+    /**
+    * Get game
+    *
+    * @return Game
+    */
+    public function getGame()
+    {
+        return $this->game;
     }
 }
 

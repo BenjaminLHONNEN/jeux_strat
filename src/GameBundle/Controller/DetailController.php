@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GameBundle\Repository\GameRepository;
 use GameBundle\Entity\Game;
-use GameBundle\Entity\Comment;
+use GameBundle\Entity\Rating;
 
 class DetailController extends Controller
 {
@@ -29,7 +29,7 @@ class DetailController extends Controller
      */
     public function indexAction(int $gameId, Request $request)
     {
-        $comment = new Comment();
+        $comment = new Rating();
         $em = $this->getDoctrine()->getManager();
         $isCommentSave = false;
 
@@ -49,32 +49,33 @@ class DetailController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
 
-            $game->setNumberOfVote($game->getNumberOfVote() + 1);
-            $game->setSumOfVote($game->getSumOfVote() + $comment->getNote());
-            $game->setRating($game->getSumOfVote() / $game->getNumberOfVote());
-
-            $comment->setGameId($gameId);
+            $comment->setGame($game);
             $comment->setUserId("1");
 
             $em->persist($comment);
-            $em->persist($game);
             $em->flush();
             $isCommentSave = true;
         }
 
 
-        $commentRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Comment");
+        $commentRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Rating");
         $comments = $commentRepository->findBy(array("gameId" => $gameId));
         $userRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\User");
 
         $commentsObject = [];
+        $numberOfVote = 0;
+        $sumOfVote = 0;
         foreach ($comments as $comment) {
             $object = [];
+            $numberOfVote++;
+            $sumOfVote += $comment->getNote();
             $object['commentClass'] = $comment;
             $object['userClass'] = $userRepository->find($comment->getUserId());
             $commentsObject[] = $object;
         }
-
+        if ($numberOfVote === 0){
+            $numberOfVote = 1;
+        }
 
         if ($game !== null) {
             return $this->render('GameBundle:Game:detail.html.twig', [
@@ -82,6 +83,8 @@ class DetailController extends Controller
                 'form' => $form->createView(),
                 'isCommentSave' => $isCommentSave,
                 'commentsArray' => $commentsObject,
+                'numberOfVote' => $numberOfVote,
+                'sumOfVote' => $sumOfVote,
             ], new Response('', 200));
         } else {
             return $this->render('GameBundle:Game:404.html.twig', [], new Response('404 Game not Found', 200));

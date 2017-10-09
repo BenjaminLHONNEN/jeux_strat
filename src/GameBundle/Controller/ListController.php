@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use GameBundle\Repository\GameRepository;
 use GameBundle\Entity\Game;
 use Doctrine\ORM\EntityManagerInterface;
+use GameBundle\Entity\Rating;
 
 
 class ListController extends Controller
@@ -24,6 +25,7 @@ class ListController extends Controller
     public function indexAction(Request $request)
     {
         $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
+        $ratingRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Rating");
 
         $sortTarget = $request->get('sort', 'none');
         $sortMode = $request->get('order', 'none');
@@ -44,6 +46,7 @@ class ListController extends Controller
 
             $games = $gameRepository->findAll();
         }
+
 
         if($sortMode === "ascend"){
             $invertSortMode = "descend";
