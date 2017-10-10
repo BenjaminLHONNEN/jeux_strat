@@ -15,35 +15,37 @@
                 <p>{{ game.description }}</p>
             </td>
             <td class="gameNote"><span
-                            {% if (sumOfVote/numberOfVote) < 3.5 %}
-                                class="review-red"
-                            {% elseif (sumOfVote/numberOfVote) < 6.5 %}
-                                class="review-orange"
-                            {% else %}
-                                class="review-green"
-                            {% endif %}
-                    >
+                        {% if (sumOfVote/numberOfVote) < 3.5 %}
+                            class="review-red"
+                        {% elseif (sumOfVote/numberOfVote) < 6.5 %}
+                            class="review-orange"
+                        {% else %}
+                            class="review-green"
+                        {% endif %}
+                >
                     {{ (sumOfVote/numberOfVote) | round(2, 'floor') }} | 10
                 </span></td>
         </tr>
     </table>
-    <h1>Comment :</h1>
 
+    {% if user %}
+        <h1>Comment :</h1>
+        {% if isCommentSave %}
+            <p class="alert-green"> Merci de votre commentaire ! </p>
+        {% endif %}
 
-    {% if isCommentSave %}
-        <p class="alert-green"> Merci de votre commentaire ! </p>
+        <label class="required">Note : </label>
+
+        {% include 'includes/ratingWidget.html.twig' with {
+        inputTarget: "form_note",
+        } %}
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    {% else %}
+        <h2 class="align-center"> Connect to let comments </h2>
     {% endif %}
-
-    <label class="required">Note : </label>
-
-    {% include 'includes/ratingWidget.html.twig' with {
-    inputTarget: "form_note",
-    } %}
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-
 
     <table class="appear-fade">
         <tr>

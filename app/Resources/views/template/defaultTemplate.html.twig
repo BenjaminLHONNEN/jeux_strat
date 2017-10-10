@@ -18,20 +18,37 @@
 <body>
 
 <header class="header-center deskop-header appear-fade">
-
-    <ul id="button-header-desktop">
-        <li><button class="button-6-4 hover-shake pointer" onclick="document.location = '{{ url('login') }}'">sign in</button></li>
-        <li><button class="button-6-4 hover-shake pointer" onclick="document.location = '{{ url('signUp') }}'">sign up</button></li>
-    </ul>
-    <ul>
-        <li><h3><a href="{{ url('game_list') }}">Games List</a></h3></li>
-    </ul>
-
+    <div class="header-display-left">
+        <ul class="header-button-left">
+            <li><a href="{{ url('game_list') }}">Games List</a></li>
+        </ul>
+    </div>
+    <div class="header-display-right">
+        <ul class="header-button-right">
+            {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li>
+                    <a href="{{ url('login') }}">
+                        <i class="fa fa-sign-in"></i> Sign in
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('signUp') }}">
+                        <i class="fa fa-user-plus"></i> Sign up
+                    </a>
+                </li>
+            {% else %}
+                <li>
+                    <a class="nav-link" href="{{ path('logout') }}">
+                        <i class="fa fa-sign-out"></i> Se déconnecter ({{ app.user.username }})
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 
 </header>
 
 {% block content '' %}
-
 
 </body>
 </html>

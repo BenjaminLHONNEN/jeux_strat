@@ -32,6 +32,7 @@ class DetailController extends Controller
         $comment = new Rating();
         $em = $this->getDoctrine()->getManager();
         $isCommentSave = false;
+        $user = $this->getUser();
 
 
         $form = $this->createFormBuilder($comment)
@@ -46,11 +47,11 @@ class DetailController extends Controller
         $game = $gameRepository->find($gameId);
 
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $user) {
             $comment = $form->getData();
 
             $comment->setGame($game);
-            $comment->setUserId("1");
+            $comment->setUserId($user->getId());
 
             $em->persist($comment);
             $em->flush();
@@ -73,13 +74,14 @@ class DetailController extends Controller
             $object['userClass'] = $userRepository->find($comment->getUserId());
             $commentsObject[] = $object;
         }
-        if ($numberOfVote === 0){
+        if ($numberOfVote === 0) {
             $numberOfVote = 1;
         }
 
         if ($game !== null) {
             return $this->render('GameBundle:Game:detail.html.twig', [
                 "game" => $game,
+                "user" => $user,
                 'form' => $form->createView(),
                 'isCommentSave' => $isCommentSave,
                 'commentsArray' => $commentsObject,

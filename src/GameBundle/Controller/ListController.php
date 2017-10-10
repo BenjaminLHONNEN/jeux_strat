@@ -25,7 +25,6 @@ class ListController extends Controller
     public function indexAction(Request $request)
     {
         $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
-        $ratingRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Rating");
 
         $sortTarget = $request->get('sort', 'none');
         $sortMode = $request->get('order', 'none');
@@ -43,10 +42,8 @@ class ListController extends Controller
                 $games = $gameRepository->findBy([], ['name' => 'DESC']);
             }
         } else {
-
             $games = $gameRepository->findAll();
         }
-
 
         if($sortMode === "ascend"){
             $invertSortMode = "descend";

@@ -63,12 +63,6 @@ tr:last-child td:last-child{
     cursor: pointer;
     background-color: #dedede;
 }
-#button-header-desktop{
-    position: fixed;
-    margin: 11px;
-    right: 0%;
-    top: 0%;
-}
 .image{
     max-height: 200px;
     max-width: 200px;

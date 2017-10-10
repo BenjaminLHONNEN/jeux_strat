@@ -73,6 +73,15 @@ p, div {
 .text-muted {
     color: #888888;
 }
+.align-center {
+    text-align: center;
+}
+.align-left {
+    text-align: left;
+}
+.align-right {
+    text-align: right;
+}
 /*End Text*/
 
 /* Alerts */
@@ -123,10 +132,26 @@ p, div {
 /*End Alerts*/
 
 /* Header */
-.header-right {
+.header-button-right,.header-button-left,.header-display-left,.header-display-right{
+    display: inline-block;
+}
+.header-display-left{
     position: fixed;
     top: 0;
+    left: 0;
+    right: 50%;
+    text-align: left;
+    background-color: dodgerblue;
+    z-index: 110;
+}
+.header-display-right{
+    position: fixed;
+    top: 0;
+    left: 50%;
     right: 0;
+    text-align: right;
+    background-color: dodgerblue;
+    z-index: 110;
 }
 
 .header-left {
