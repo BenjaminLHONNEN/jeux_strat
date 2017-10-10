@@ -23,6 +23,7 @@ class GamesFixturesCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $passEncoder = $this->getContainer()->get("security.password_encoder");
         $output->writeln('START');
         $output->writeln('');
         $output->writeln('');
@@ -48,14 +49,14 @@ class GamesFixturesCommand extends ContainerAwareCommand
                 "mail" => "benjamin.lhonnen@ynov.com",
                 "password" => "1234",
                 "imageLink" => "./asset/userImages/1.gif",
-                "role" => "admin",
+                "role" => "ROLE_ADMIN",
             ],
             [
                 "pseudo" => "Ulric",
                 "mail" => "emeric.lesault@ynov.com",
                 "password" => "1234",
                 "imageLink" => "./asset/userImages/2.png",
-                "role" => "admin",
+                "role" => "ROLE_ADMIN",
             ],
         ];
 
@@ -87,7 +88,7 @@ class GamesFixturesCommand extends ContainerAwareCommand
             $newuser = new User();
             $newuser->setPseudo($user["pseudo"])
                 ->setMail($user["mail"])
-                ->setPassword($user["password"])
+                ->setPassword($passEncoder->encodePassword($newuser,$user["password"]))
                 ->setImageLink($user["imageLink"])
                 ->setRole($user["role"]);
             $em->persist($newuser);

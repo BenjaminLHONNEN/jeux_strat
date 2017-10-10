@@ -15,10 +15,10 @@ class DefaultController extends Controller
         return $this->render('GameBundle:Default:index.html.twig');
     }
     /**
-     * @Route("/test")
+     * @Route("/admin")
      */
     public function testAction()
     {
-        return $this->render('GameBundle:Default:test.html.twig');
+        return $this->render('GameBundle:Default:admin.html.twig');
     }
 }

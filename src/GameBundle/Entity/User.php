@@ -3,6 +3,7 @@
 namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="GameBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -114,6 +115,10 @@ class User
     {
         return $this->mail;
     }
+    public function getUsername()
+    {
+        return $this->mail;
+    }
 
     /**
      * Set password
@@ -185,6 +190,38 @@ class User
     public function getRole()
     {
         return $this->role;
+    }
+    public function getRoles()
+    {
+        return array($this->role);
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials(){
+        return null;
+    }
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->mail,
+            $this->password,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->mail,
+            $this->password,
+            ) = unserialize($serialized);
     }
 }
 
