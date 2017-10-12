@@ -200,5 +200,10 @@ class Game
         }
         return $sumOfVote/$numberOfVote;
     }
+
+    public function __toString()
+    {
+        return "Game Id  : " . $this->getId();
+    }
 }
 

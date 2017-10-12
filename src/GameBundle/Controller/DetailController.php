@@ -35,7 +35,7 @@ class DetailController extends Controller
 
 
         $form = $this->createFormBuilder($comment)
-            ->add('note', HiddenType::class, array("data" => "-1"))
+            ->add('note', TextType::class, array("label" => false,"data" => "-1","attr" => array("style" => "display:none;")))
             ->add('comment', TextareaType::class, array("label" => "Comment : "))
             ->add('save', SubmitType::class, array('label' => 'Send Comment'))
             ->getForm();

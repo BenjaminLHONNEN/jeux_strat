@@ -1,82 +1,136 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Ulric
- * Date: 28/09/2017
- * Time: 12:36
- */
 
 namespace GameBundle\Controller;
 
-
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use GameBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * User controller.
+ *
+ * @Route("admin/user")
+ */
 class UserController extends Controller
 {
     /**
-     * @Route("/user/sign/in", name="login")
+     * Lists all user entities.
+     *
+     * @Route("/", name="admin_user_index")
+     * @Method("GET")
      */
-    public function loginAction(Request $request)
+    public function indexAction()
     {
-        $authUtils = $this->get('security.authentication_utils');
-        $error = $authUtils->getLastAuthenticationError();
-        $lastUsername = $authUtils->getLastUsername();
+        $em = $this->getDoctrine()->getManager();
 
-        return $this->render('GameBundle:Game:signIn.html.twig', array(
-            'last_username' => $lastUsername,
-            'error'         => $error,
+        $users = $em->getRepository('GameBundle:User')->findAll();
+
+        return $this->render('user/index.html.twig', array(
+            'users' => $users,
         ));
     }
 
     /**
-     * @Route("/user/sign/up", name="signUp")
+     * Creates a new user entity.
+     *
+     * @Route("/new", name="admin_user_new")
+     * @Method({"GET", "POST"})
      */
-    public function signAction(Request $request)
+    public function newAction(Request $request)
     {
         $user = new User();
-        $em = $this->getDoctrine()->getManager();
-        $passEncoder = $this->get("security.password_encoder");
-
-        $form = $this->createFormBuilder($user)
-            ->add('pseudo', TextType::class, array('label' => 'Pseudo : '))
-            ->add('mail', TextType::class, array('label' => 'Mail : '))
-            ->add('password', TextType::class, array('label' => 'Password : '))
-            ->add('imageLink', FileType::class, array('label' => 'Image (png,gif,jpg) : '))
-            ->add('save', SubmitType::class, array('label' => 'Sign Up'))
-            ->getForm();
+        $form = $this->createForm('GameBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-            $file = $user->getImageLink();
-
-            $user->setPassword($passEncoder->encodePassword($user,$user->getPassword()));
-            $user->setRole("ROLE_USER");
-            $user->setImageLink("none");
-
+            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            $fileName = "./asset/userImages/" . $user->getId() . ".gif";
-            $user->setImageLink($fileName);
-            $file->move(
-                $this->getParameter('user_image_directory'),
-                $fileName
-            );
-            $em->persist($user);
+            return $this->redirectToRoute('admin_user_show', array('id' => $user->getId()));
+        }
+
+        return $this->render('user/new.html.twig', array(
+            'user' => $user,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Finds and displays a user entity.
+     *
+     * @Route("/{id}", name="admin_user_show")
+     * @Method("GET")
+     */
+    public function showAction(User $user)
+    {
+        $deleteForm = $this->createDeleteForm($user);
+
+        return $this->render('user/show.html.twig', array(
+            'user' => $user,
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit an existing user entity.
+     *
+     * @Route("/{id}/edit", name="admin_user_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, User $user)
+    {
+        $deleteForm = $this->createDeleteForm($user);
+        $editForm = $this->createForm('GameBundle\Form\UserType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin_user_edit', array('id' => $user->getId()));
+        }
+
+        return $this->render('user/edit.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
+     * Deletes a user entity.
+     *
+     * @Route("/{id}", name="admin_user_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, User $user)
+    {
+        $form = $this->createDeleteForm($user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
             $em->flush();
         }
 
-        return $this->render('GameBundle:Game:signUp.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('admin_user_index');
+    }
+
+    /**
+     * Creates a form to delete a user entity.
+     *
+     * @param User $user The user entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm(User $user)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('admin_user_delete', array('id' => $user->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
     }
 }

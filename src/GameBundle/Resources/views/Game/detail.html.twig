@@ -31,16 +31,29 @@
     {% if user %}
         <h1>Comment :</h1>
         {#{% if isCommentSave %}#}
-            {#<p class="alert-green"> Merci de votre commentaire ! </p>#}
+        {#<p class="alert-green"> Merci de votre commentaire ! </p>#}
         {#{% endif %}#}
 
-        <label class="required">Note : </label>
 
+
+
+
+        {% form_theme form 'template/formTemplate.html.twig' %}
+
+        {{ form_start(form) }}
+
+        {{ form_row(form.note) }}
+
+        <label>Note : </label>
         {% include 'includes/ratingWidget.html.twig' with {
         inputTarget: "form_note",
         } %}
 
-        {{ form(form) }}
+        {{ form_row(form.comment) }}
+        {{ form_row(form.save) }}
+
+        {{ form_end(form) }}
+
     {% else %}
         <h2 class="align-center"> Connect to let comments </h2>
     {% endif %}

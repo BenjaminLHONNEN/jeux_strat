@@ -19,9 +19,18 @@ input,textarea{
     background-color: white;
     color: #313131;
     display: block;
-    width: 100%;
+    width: 80%;
     margin: 5px;
     padding: 5px;
+}
+select{
+    margin: 5px;
+    display: block;
+    padding: 5px;
+    border-radius: 10px;
+    width: 80%;
+    border:solid 1px #DDDDDD;
+    color: #313131;
 }
 textarea{
     min-height: 150px;
@@ -125,6 +134,26 @@ p, div {
     background-color: whitesmoke;
 }
 .alert-gray-inverted{
+    color: gray;
+    border: solid 1px gray;
+    background-color: whitesmoke;
+}
+.input-alert-green{
+    color: green;
+    border: solid 1px green;
+    background-color: whitesmoke;
+}
+.input-alert-red{
+    color: red;
+    border: solid 1px red;
+    background-color: whitesmoke;
+}
+.input-alert-orange{
+    color: orange;
+    border: solid 1px orange;
+    background-color: whitesmoke;
+}
+.input-alert-gray{
     color: gray;
     border: solid 1px gray;
     background-color: whitesmoke;
