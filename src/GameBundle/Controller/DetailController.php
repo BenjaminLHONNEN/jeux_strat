@@ -31,7 +31,6 @@ class DetailController extends Controller
     {
         $comment = new Rating();
         $em = $this->getDoctrine()->getManager();
-        $isCommentSave = false;
         $user = $this->getUser();
 
 
@@ -55,7 +54,10 @@ class DetailController extends Controller
 
             $em->persist($comment);
             $em->flush();
-            $isCommentSave = true;
+
+            return $this->redirectToRoute('game_detail',[
+                "gameId" => $gameId,
+            ]);
         }
 
 
@@ -83,7 +85,6 @@ class DetailController extends Controller
                 "game" => $game,
                 "user" => $user,
                 'form' => $form->createView(),
-                'isCommentSave' => $isCommentSave,
                 'commentsArray' => $commentsObject,
                 'numberOfVote' => $numberOfVote,
                 'sumOfVote' => $sumOfVote,

@@ -3,6 +3,7 @@
 namespace GameBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Rating
@@ -24,13 +25,6 @@ class Rating
     /**
      * @var int
      *
-     * @ORM\Column(name="gameId", type="integer")
-     */
-    private $gameId;
-
-    /**
-     * @var int
-     *
      * @ORM\Column(name="userId", type="integer")
      */
     private $userId;
@@ -39,6 +33,7 @@ class Rating
      * @var int
      *
      * @ORM\Column(name="note", type="integer")
+     * @Assert\NotBlank()
      */
     private $note;
 
@@ -46,6 +41,7 @@ class Rating
      * @var string
      *
      * @ORM\Column(name="comment", type="string", length=1500)
+     * @Assert\NotBlank()
      */
     private $comment;
 
