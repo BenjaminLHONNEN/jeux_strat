@@ -63,9 +63,10 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
+# mailcatcher --ip 0.0.0.0
 swiftmailer:
     transport: '%mailer_transport%'
-    host: '%mailer_host%'
+    host: '%mailer_host%:1025'
     username: '%mailer_user%'
     password: '%mailer_password%'
     spool: { type: memory }

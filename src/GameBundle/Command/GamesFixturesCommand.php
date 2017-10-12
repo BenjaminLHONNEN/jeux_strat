@@ -52,6 +52,20 @@ class GamesFixturesCommand extends ContainerAwareCommand
                 "role" => "ROLE_ADMIN",
             ],
             [
+                "pseudo" => "admin",
+                "mail" => "admin@ynov.com",
+                "password" => "1234",
+                "imageLink" => "./asset/userImages/1.gif",
+                "role" => "ROLE_ADMIN",
+            ],
+            [
+                "pseudo" => "user",
+                "mail" => "user@ynov.com",
+                "password" => "1234",
+                "imageLink" => "./asset/userImages/2.gif",
+                "role" => "ROLE_USER",
+            ],
+            [
                 "pseudo" => "Ulric",
                 "mail" => "emeric.lesault@ynov.com",
                 "password" => "1234",

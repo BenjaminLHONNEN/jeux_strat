@@ -10,7 +10,7 @@
             <div class="review-red">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('login') }}" method="post">
+        <form action="{{ path('login',{"route" : route }) }}" method="post">
             <label for="username">Mail : </label>
             <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
@@ -19,7 +19,7 @@
 
             <input type="hidden" name="_target_path" value="/game/list"/>
 
-            <button type="submit">login</button>
+            <button class="button-6-1" type="submit">login</button>
         </form>
 
     </div>
