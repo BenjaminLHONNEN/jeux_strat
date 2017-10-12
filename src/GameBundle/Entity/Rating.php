@@ -34,6 +34,12 @@ class Rating
      *
      * @ORM\Column(name="note", type="integer")
      * @Assert\NotBlank()
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10,
+     *      minMessage = "You must have a minimum note of {{ limit }}",
+     *      maxMessage = "You must have a maximum note of {{ limit }}"
+     * )
      */
     private $note;
 
