@@ -61,18 +61,10 @@ class SingUpController extends Controller
 
             $user->setPassword($passEncoder->encodePassword($user, $user->getPassword()));
             $user->setRole("ROLE_USER");
-            $user->setImageLink("none");
-
-            $em->persist($user);
-            $em->flush();
 
             if ($file) {
-                $fileName = "./asset/userImages/" . $user->getId() . ".gif";
+                $fileName = "./asset/userImages/" . md5($user->getMail()) . ".gif";
                 $user->setImageLink($fileName);
-                $file->move(
-                    $this->getParameter('user_image_directory'),
-                    $fileName
-                );
             } else {
                 $fileName = "./asset/userImages/1.gif";
                 $user->setImageLink($fileName);
@@ -80,6 +72,13 @@ class SingUpController extends Controller
 
             $em->persist($user);
             $em->flush();
+
+            if($file) {
+                $file->move(
+                    $this->getParameter('user_image_directory'),
+                    $fileName
+                );
+            }
 
             $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
             $this->get('security.token_storage')->setToken($token);
