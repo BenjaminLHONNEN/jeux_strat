@@ -22,6 +22,11 @@
         <ul class="header-button-left">
             <li><a href="{{ url('game_list') }}">Games List</a></li>
         </ul>
+        {% if is_granted('ROLE_ADMIN') %}
+        <ul class="header-button-left">
+            <li><a href="{{ url('admin_dashboard') }}">Espace Admin</a></li>
+        </ul>
+        {% endif %}
     </div>
     <div class="header-display-right">
         <ul class="header-button-right">

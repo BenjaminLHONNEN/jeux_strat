@@ -10,7 +10,7 @@
             <div class="review-red">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('login',{"route" : route }) }}" method="post">
+        <form action="{{ path('login')}}" method="post">
             <label for="username">Mail : </label>
             <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
