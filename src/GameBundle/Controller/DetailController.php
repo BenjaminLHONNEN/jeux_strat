@@ -44,6 +44,7 @@ class DetailController extends Controller
         $form->handleRequest($request);
         $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
         $game = $gameRepository->find($gameId);
+        $gameStatService = $this->container->get('game.statistique.averageNote');
 
 
         if ($form->isSubmitted() && $form->isValid() && $user) {
@@ -66,18 +67,11 @@ class DetailController extends Controller
         $userRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\User");
 
         $commentsObject = [];
-        $numberOfVote = 0;
-        $sumOfVote = 0;
         foreach ($comments as $comment) {
             $object = [];
-            $numberOfVote++;
-            $sumOfVote += $comment->getNote();
             $object['commentClass'] = $comment;
             $object['userClass'] = $userRepository->find($comment->getUserId());
             $commentsObject[] = $object;
-        }
-        if ($numberOfVote === 0) {
-            $numberOfVote = 1;
         }
 
         if ($game !== null) {
@@ -86,8 +80,7 @@ class DetailController extends Controller
                 "user" => $user,
                 'form' => $form->createView(),
                 'commentsArray' => $commentsObject,
-                'numberOfVote' => $numberOfVote,
-                'sumOfVote' => $sumOfVote,
+                'averageNote' => $gameStatService->getAverageNote($game->getId()),
             ], new Response('', 200));
         } else {
             return $this->render('GameBundle:Game:404.html.twig', [], new Response('404 Game not Found', 200));

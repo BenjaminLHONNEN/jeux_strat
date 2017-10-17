@@ -1,0 +1,33 @@
+{% extends 'template/defaultTemplate.html.twig' %}
+
+{% block page_title %}<title>Doc API</title>{% endblock %}
+
+{% block content %}
+
+    <div>
+        <div>
+            <input id="user-id-get-user-by-id" placeholder="USER ID" type="text">
+            <button onclick="getUserbyId()" class="button-6-1">Send Request</button>
+        </div>
+        <div id="api-result-get-user-by-id">
+
+        </div>
+        <script>
+            function getUserbyId() {
+                $.get("./api/user/" + document.getElementById("user-id-get-user-by-id").value, function (data) {
+                    var str = JSON.stringify(data).replace(",", ",<br>");
+                    str = str.replace("[", "[<br>");
+                    str = str.replace("]", "]<br>");
+                    str = str.replace("{", "{<br>");
+                    str = str.replace("}", "}<br>");
+                    str = str.replace("(", "(<br>");
+                    str = str.replace(")", ")<br>");
+                    document.getElementById("api-result-get-user-by-id").innerHTML = str;
+                    console.log(data);
+                });
+            }
+        </script>
+    </div>
+
+{% endblock %}
+

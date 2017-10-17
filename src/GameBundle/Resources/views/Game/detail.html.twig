@@ -15,15 +15,15 @@
                 <p>{{ game.description }}</p>
             </td>
             <td class="gameNote"><span
-                        {% if (sumOfVote/numberOfVote) < 3.5 %}
+                        {% if (averageNote) < 3.5 %}
                             class="review-red"
-                        {% elseif (sumOfVote/numberOfVote) < 6.5 %}
+                        {% elseif (averageNote) < 6.5 %}
                             class="review-orange"
                         {% else %}
                             class="review-green"
                         {% endif %}
                 >
-                    {{ (sumOfVote/numberOfVote) | round(2, 'floor') }} | 10
+                    {{ (averageNote) | round(2, 'floor') }} | 10
                 </span></td>
         </tr>
     </table>
