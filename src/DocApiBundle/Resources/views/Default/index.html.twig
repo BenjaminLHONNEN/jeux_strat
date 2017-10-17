@@ -14,7 +14,7 @@
         </div>
         <script>
             function getUserbyId() {
-                $.get("./api/user/" + document.getElementById("user-id-get-user-by-id").value, function (data) {
+                $.get("../api/user/" + document.getElementById("user-id-get-user-by-id").value, function (data) {
                     var str = JSON.stringify(data).replace(",", ",<br>");
                     str = str.replace("[", "[<br>");
                     str = str.replace("]", "]<br>");
