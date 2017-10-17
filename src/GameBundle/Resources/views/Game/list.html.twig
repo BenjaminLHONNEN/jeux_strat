@@ -3,44 +3,45 @@
 {% block page_title %}<title> Game List </title>{% endblock %}
 
 {% block content %}
-    <input type="text" placeholder="Keyword" id="search">
+    <div class="align-center">
+        <input style="display: inline-block;font-size: 2em;padding: 7px;" type="text" placeholder="Research A Game" id="search">
+    </div>
     <script>
         var input = document.getElementById("search");
-        input.onkeyup = function(){
-            $.get("../../api/searchGame/" + $('#search')[0].value , function (data){
-            console.log(data);
-            $('#body-table')[0].innerHTML = "";
+        input.onkeyup = function () {
+            $('#body-table')[0].innerHTML = "<tr><td colspan='3' class='align-center'><i class=\"fa fa-spinner fa-spin fa-3x fa-fw\"></i></td></tr>";
+            $.get("../../api/searchGame/" + $('#search')[0].value, function (data) {
+                    $('#body-table')[0].innerHTML = "";
+                    for (var x = 0; x < data["Games"].length; x++) {
+                        var game = data["Games"][x], assetDefault = "{{ asset("") }}",
+                            gameDetail = "{{ url('game_detail', {'gameId': 0}) }}".replace("0", ""),
+                            ratingClass = "review-orange";
+                        if (game["rating"] < 3.5) {
+                            ratingClass = "review-red";
+                        } else if (game["rating"] < 6.5) {
+                            ratingClass = "review-orange";
+                        } else {
+                            ratingClass = "review-green";
+                        }
+                        console.info(game);
+                        console.info(gameDetail + game["id"]);
+                        $('#body-table')[0].innerHTML += "<tr class=\"appear-fade linkGamelist\"\n" +
+                            "                onclick=\"document.location = '" + gameDetail + game["id"] + "'\">\n" +
+                            "                <td><img class=\"image\" src=\"" + assetDefault + game["image"] + "\"></td>\n" +
+                            "                <td><h2 id=\"gameName\">" + game["name"] + "</h2>\n" +
+                            "                    <p>" + game["description"] + "</p></td>\n" +
+                            "                <td width=\"150px\" style=\"text-align: center;\">\n" +
+                            "                    <span\n" +
+                            "                                class=\"" + ratingClass + "\" \n" +
+                            "                    >\n" +
+                            "                        " + game["rating"] + " | 10\n" +
+                            "                    </span></td>\n" +
+                            "            </tr>"
+                    }
 
-            for(var x=0; x < data["Games"].length;x++){
-                var game = data["Games"][x],assetDefault = "{{ asset("") }}",
-                gameDetail = "url('game_detail')";
-                console.info(game);
-                $('#body-table')[0].innerHTML += "<tr class=\"appear-fade linkGamelist\"> ";
-                $('#body-table')[0].innerHTML += "<td>" + "<img src=" + assetDefault + game["image"] + "></td>";
-                $('#body-table')[0].innerHTML += "<td>" + game["name"] + "</td>";
-                $('#body-table')[0].innerHTML += "<tr>"
-                $('#body-table')[0].innerHTML += "<tr class=\"appear-fade linkGamelist\"\n" +
-                    "                onclick=\"document.location = '" + gameDetail + game["id"] + "'\">\n" +
-                    "                <td><img class=\"image\" src=\"" + assetDefault + game["image"] + "\"></td>\n" +
-                    "                <td><h2 id=\"gameName\">" + game["name"] + "</h2>\n" +
-                    "                    <p>" + game["description"] + "</p></td>\n" +
-                    "                <td width=\"150px\" style=\"text-align: center;\">\n" +
-                    "                    <span\n" +
-                    "                            {% if review < 3.5 %}\n" +
-                    "                                class=\"review-red\"\n" +
-                    "                            {% elseif review < 6.5 %}\n" +
-                    "                                class=\"review-orange\"\n" +
-                    "                            {% else %}\n" +
-                    "                                class=\"review-green\"\n" +
-                    "                            {% endif %}\n" +
-                    "                    >\n" +
-                    "                        {{ review }} | 10\n" +
-                    "                    </span></td>\n" +
-                    "            </tr>"
-            }
-
-            }
-        )};
+                }
+            )
+        };
 
     </script>
     <table>
@@ -58,8 +59,7 @@
                     {% endif %}
                 </div>
             </th>
-            <th class="link"
-                onclick="document.location = '{{ url('game_list', {'sort': 'rating','order':invertSortMode}) }}'">
+            <th>
                 <h1 style="display: inline-block;">Review</h1>
                 <div style="padding: 2px;display: inline-block">
                     {% if sortTarget == "rating" and sortMode == "ascend" %}

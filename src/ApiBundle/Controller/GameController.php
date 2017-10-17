@@ -36,11 +36,34 @@ class GameController extends Controller
             ->getQuery();
         $result = $query->getResult(Query::HYDRATE_ARRAY);
 
+        $responseArray = [];
+        foreach ($result as $game) {
+            $query = $this->getDoctrine()
+                ->getRepository('GameBundle:Rating')
+                ->createQueryBuilder('r')
+                ->where('r.game = :gameId')
+                ->setParameter('gameId', $game['id'])
+                ->getQuery();
+            $resultRatings = $query->getResult(Query::HYDRATE_ARRAY);
+            $numberOfVote = 0;
+            $totalVote = 0;
+            foreach ($resultRatings as $rating) {
+                $totalVote += $rating["note"];
+                $numberOfVote++;
+            }
+            if ($numberOfVote === 0) {
+                $numberOfVote = 1;
+            }
+
+            $game['rating'] = $totalVote / $numberOfVote;
+            $responseArray[] = $game;
+        }
+
         $time_end = $this->microtime_float();
         $time = $time_end - $time_start;
 
         $response = new JsonResponse([
-            "Games" => $result,
+            "Games" => $responseArray,
             "responseType" => "array",
             "responseLen" => count($result),
             "executionTime" => $time,
@@ -49,34 +72,12 @@ class GameController extends Controller
         return $response;
     }
 
-
     /**
-     * @Route("/api/gameById/{gameId}",requirements={"gameId": "[0-9]+"})
+     * @Route("/api/searchGame/")
      */
-    public function oneGameAction(int $gameId)
+    public function searchEmptyGamesAction()
     {
-        $time_start = $this->microtime_float();
-
-        $query = $this->getDoctrine()
-            ->getRepository('GameBundle:Game')
-            ->createQueryBuilder('c')
-            ->where('c.id = :gameId')
-            ->setParameter('gameId', $gameId)
-            ->getQuery();
-        $result = $query->getResult(Query::HYDRATE_ARRAY);
-
-        $time_end = $this->microtime_float();
-        $time = $time_end - $time_start;
-
-
-        $response = new JsonResponse([
-            "Games" => $result,
-            "responseType" => "array",
-            "responseLen" => count($result),
-            "executionTime" => $time,
-        ]);
-        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
-        return $response;
+        return $this->allGamesAction();
     }
 
     /**
@@ -84,7 +85,6 @@ class GameController extends Controller
      */
     public function searchGamesAction($entry)
     {
-
         $time_start = $this->microtime_float();
 
         $query = $this->getDoctrine()
@@ -95,26 +95,39 @@ class GameController extends Controller
         $searchIn = [];
 
         foreach ($result as $game) {
-            
             $searchIn[] = [];
-            $searchIn[count($searchIn)-1][] = $game["id"];
-            $searchIn[count($searchIn)-1][] = $game["name"];
-
+            $searchIn[count($searchIn) - 1][] = $game["id"];
+            $searchIn[count($searchIn) - 1][] = $game["name"];
             foreach ($game["tags"] as $tag) {
-                
-                $searchIn[count($searchIn)-1][] = $tag;
+                $searchIn[count($searchIn) - 1][] = $tag;
             }
         }
 
-        $resultResearch = $this->research($searchIn,$entry);
+        $resultResearch = $this->research($searchIn, $entry);
         $responseArray = [];
         foreach ($resultResearch as $resultGame) {
-            
             foreach ($result as $game) {
-                
                 if ($game["id"] == $resultGame["researchIn"][0]) {
-                    
-                    $responseArray[]     = $game;
+
+                    $query = $this->getDoctrine()
+                        ->getRepository('GameBundle:Rating')
+                        ->createQueryBuilder('r')
+                        ->where('r.game = :gameId')
+                        ->setParameter('gameId', $game['id'])
+                        ->getQuery();
+                    $resultRatings = $query->getResult(Query::HYDRATE_ARRAY);
+                    $numberOfVote = 0;
+                    $totalVote = 0;
+                    foreach ($resultRatings as $rating) {
+                        $totalVote += $rating["note"];
+                        $numberOfVote++;
+                    }
+                    if ($numberOfVote === 0) {
+                        $numberOfVote = 1;
+                    }
+
+                    $game['rating'] = $totalVote / $numberOfVote;
+                    $responseArray[] = $game;
                 }
 
             }
@@ -135,28 +148,28 @@ class GameController extends Controller
 
     }
 
-    public function research($searchIn,$entry) 
-    {   
+    public function research($searchIn, $entry)
+    {
 
         $responseArray = [];
         $entry = strtolower($entry);
 
-        foreach ($searchIn as $row){
+        foreach ($searchIn as $row) {
             $responseArray[] = [];
             $point = 0;
-            foreach($row as $sentence){
+            foreach ($row as $sentence) {
                 $sentence = strtolower($sentence);
-                if($sentence === $entry) {
+                if ($sentence === $entry) {
                     $point += 10000;
                 }
-                foreach(explode(" ",$sentence) as $word){
-                    foreach(explode(" ",$entry) as $entryWord){
-                        if($word === $entryWord){
+                foreach (explode(" ", $sentence) as $word) {
+                    foreach (explode(" ", $entry) as $entryWord) {
+                        if ($word === $entryWord) {
                             $point += 100;
                         }
-                        foreach(str_split($word) as $letter){
-                            foreach(str_split($entryWord) as $entryLetter){
-                                if($letter === $entryLetter){
+                        foreach (str_split($word) as $letter) {
+                            foreach (str_split($entryWord) as $entryLetter) {
+                                if ($letter === $entryLetter) {
                                     $point += 1;
                                 }
                             }
@@ -170,7 +183,7 @@ class GameController extends Controller
 
         }
 
-        usort($responseArray,array($this,"compareGamesPoints"));
+        usort($responseArray, array($this, "compareGamesPoints"));
         return $responseArray;
     }
 

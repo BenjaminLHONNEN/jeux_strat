@@ -28,14 +28,7 @@ class ListController extends Controller
 
         $sortTarget = $request->get('sort', 'none');
         $sortMode = $request->get('order', 'none');
-
-        if ($sortTarget === "rating") {
-            if ($sortMode === "ascend") {
-                $games = $gameRepository->findBy([], ['rating' => 'ASC']);
-            } else {
-                $games = $gameRepository->findBy([], ['rating' => 'DESC']);
-            }
-        }else if ($sortTarget === "name") {
+        if ($sortTarget === "name") {
             if ($sortMode === "ascend") {
                 $games = $gameRepository->findBy([], ['name' => 'ASC']);
             } else {
@@ -45,7 +38,7 @@ class ListController extends Controller
             $games = $gameRepository->findAll();
         }
 
-        if($sortMode === "ascend"){
+        if ($sortMode === "ascend") {
             $invertSortMode = "descend";
         } else {
             $invertSortMode = "ascend";
