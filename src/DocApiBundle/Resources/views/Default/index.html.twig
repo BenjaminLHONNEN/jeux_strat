@@ -12,18 +12,62 @@
         <div id="api-result-get-user-by-id">
 
         </div>
+        <div>
+            <input id="game-id-get-game-by-id" placeholder="GAME ID" type="text">
+            <button onclick="getGamebyId()" class="button-6-1">Send Request</button>
+        </div>
+        <div id="api-result-get-game-by-id">
+
+        </div>
+         <div>
+            <p>GET GAMES:</p>
+            <button onclick="getGames()" class="button-6-1">Send Request</button>
+        </div>
+        <div id="api-result-get-games">
+
+        </div>
+         <div>
+            <input id="entry-get-search-game" placeholder="GAME" type="text">
+            <button onclick="getSearchGame()" class="button-6-1">Send Request</button>
+        </div>
+        <div id="api-result-get-search-game">
+
+        </div>
+         <div>
+            <input id="game-id-get-rating-by-game-id" placeholder="GAME ID" type="text">
+            <button onclick="getRatingsByGameId()" class="button-6-1">Send Request</button>
+        </div>
+        <div id="api-result-get-rating-by-game-id">
+
+        </div>
         <script>
             function getUserbyId() {
                 $.get("../api/user/" + document.getElementById("user-id-get-user-by-id").value, function (data) {
-                    var str = JSON.stringify(data).replace(",", ",<br>");
-                    str = str.replace("[", "[<br>");
-                    str = str.replace("]", "]<br>");
-                    str = str.replace("{", "{<br>");
-                    str = str.replace("}", "}<br>");
-                    str = str.replace("(", "(<br>");
-                    str = str.replace(")", ")<br>");
-                    document.getElementById("api-result-get-user-by-id").innerHTML = str;
-                    console.log(data);
+                    document.getElementById("api-result-get-user-by-id").innerHTML = JSON.stringify(data);             
+                });
+            }
+
+             function getGamebyId() {
+                $.get("../api/gameById/" + document.getElementById("game-id-get-game-by-id").value, function (data) {
+                    document.getElementById("api-result-get-game-by-id").innerHTML = JSON.stringify(data);             
+                });
+            }
+
+             function getGames() {
+                $.get("../api/games", function (data) {
+                    document.getElementById("api-result-get-games").innerHTML = JSON.stringify(data);             
+                });
+            }
+
+             function getSearchGame() {
+                $.get("../api/searchGame/" + document.getElementById("entry-get-search-game").value, function (data) {
+                    document.getElementById("api-result-get-search-game").innerHTML = JSON.stringify(data);             
+                });
+            }
+
+             function getRatingsByGameId() {
+                $.get("../api/ratingsByGameId/" + document.getElementById("game-id-get-rating-by-game-id").value, function (data) {
+                    document.getElementById("api-result-get-rating-by-game-id").innerHTML = JSON.stringify(data);             
                 });
             }
         </script>
