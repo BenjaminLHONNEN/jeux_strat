@@ -3,8 +3,48 @@
 {% block page_title %}<title> Game List </title>{% endblock %}
 
 {% block content %}
+    <input type="text" placeholder="Keyword" id="search">
+    <script>
+        var input = document.getElementById("search");
+        input.onkeyup = function(){
+            $.get("../../api/searchGame/" + $('#search')[0].value , function (data){
+            console.log(data);
+            $('#body-table')[0].innerHTML = "";
 
+            for(var x=0; x < data["Games"].length;x++){
+                var game = data["Games"][x],assetDefault = "{{ asset("") }}",
+                gameDetail = "url('game_detail')";
+                console.info(game);
+                $('#body-table')[0].innerHTML += "<tr class=\"appear-fade linkGamelist\"> ";
+                $('#body-table')[0].innerHTML += "<td>" + "<img src=" + assetDefault + game["image"] + "></td>";
+                $('#body-table')[0].innerHTML += "<td>" + game["name"] + "</td>";
+                $('#body-table')[0].innerHTML += "<tr>"
+                $('#body-table')[0].innerHTML += "<tr class=\"appear-fade linkGamelist\"\n" +
+                    "                onclick=\"document.location = '" + gameDetail + game["id"] + "'\">\n" +
+                    "                <td><img class=\"image\" src=\"" + assetDefault + game["image"] + "\"></td>\n" +
+                    "                <td><h2 id=\"gameName\">" + game["name"] + "</h2>\n" +
+                    "                    <p>" + game["description"] + "</p></td>\n" +
+                    "                <td width=\"150px\" style=\"text-align: center;\">\n" +
+                    "                    <span\n" +
+                    "                            {% if review < 3.5 %}\n" +
+                    "                                class=\"review-red\"\n" +
+                    "                            {% elseif review < 6.5 %}\n" +
+                    "                                class=\"review-orange\"\n" +
+                    "                            {% else %}\n" +
+                    "                                class=\"review-green\"\n" +
+                    "                            {% endif %}\n" +
+                    "                    >\n" +
+                    "                        {{ review }} | 10\n" +
+                    "                    </span></td>\n" +
+                    "            </tr>"
+            }
+
+            }
+        )};
+
+    </script>
     <table>
+        <thead>
         <tr class="appear-fade">
             <th></th>
             <th class="link"
@@ -30,12 +70,14 @@
                 </div>
             </th>
         </tr>
+        </thead>
+        <tbody id="body-table">
         {% for game in games %}
             {% set review = game.getAverageRating() | round(2, 'floor') %}
             <tr class="appear-fade linkGamelist"
                 onclick="document.location = '{{ url('game_detail', {'gameId': game.id}) }}'">
                 <td><img class="image" src="{{ asset(game.image) }}"></td>
-                <td><h2>{{ game.name }}</h2>
+                <td><h2 id="gameName">{{ game.name }}</h2>
                     <p>{{ game.description }}</p></td>
                 <td width="150px" style="text-align: center;">
                     <span
@@ -55,5 +97,6 @@
                 <td colspan="3">No Game Found</td>
             </tr>
         {% endfor %}
+        </tbody>
     </table>
 {% endblock %}
