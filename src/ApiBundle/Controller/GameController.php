@@ -80,34 +80,106 @@ class GameController extends Controller
     }
 
     /**
-     * @Route("/api/gameByParams")
+     * @Route("/api/searchGame/{entry}")
      */
-    public function searchGamesAction(Request $request)
+    public function searchGamesAction($entry)
     {
-        $params = $request->query->get('params');
-        if(isset($params) && $params !== null) {
-            $time_start = $this->microtime_float();
 
-            $gameRepository = $this->getDoctrine()->getRepository("GameBundle\Entity\Game");
-            $games = $gameRepository->findBy([]);
+        $time_start = $this->microtime_float();
 
-            $time_end = $this->microtime_float();
-            $time = $time_end - $time_start;
+        $query = $this->getDoctrine()
+            ->getRepository('GameBundle:Game')
+            ->createQueryBuilder('c')
+            ->getQuery();
+        $result = $query->getResult(Query::HYDRATE_ARRAY);
+        $searchIn = [];
 
-            $result = $games;
+        foreach ($result as $game) {
+            
+            $searchIn[] = [];
+            $searchIn[count($searchIn)-1][] = $game["id"];
+            $searchIn[count($searchIn)-1][] = $game["name"];
 
-            $response = new JsonResponse([
-                "Games" => $result,
-                "responseType" => "array",
-                "responseLen" => count($result),
-                "executionTime" => $time,
-            ]);
-            $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
-            return $response;
-        } else {
-            return $this->json([
-                "responseType" => "error",
-            ]);
+            foreach ($game["tags"] as $tag) {
+                
+                $searchIn[count($searchIn)-1][] = $tag;
+            }
         }
+
+        $resultResearch = $this->research($searchIn,$entry);
+        $responseArray = [];
+        foreach ($resultResearch as $resultGame) {
+            
+            foreach ($result as $game) {
+                
+                if ($game["id"] == $resultGame["researchIn"][0]) {
+                    
+                    $responseArray[]     = $game;
+                }
+
+            }
+        }
+
+        $time_end = $this->microtime_float();
+        $time = $time_end - $time_start;
+
+
+        $response = new JsonResponse([
+            "Games" => $responseArray,
+            "responseType" => "array",
+            "responseLen" => count($result),
+            "executionTime" => $time,
+        ]);
+        $response->setEncodingOptions($response->getEncodingOptions() | JSON_PRETTY_PRINT);
+        return $response;
+
     }
+
+    public function research($searchIn,$entry) 
+    {   
+
+        $responseArray = [];
+        $entry = strtolower($entry);
+
+        foreach ($searchIn as $row){
+            $responseArray[] = [];
+            $point = 0;
+            foreach($row as $sentence){
+                $sentence = strtolower($sentence);
+                if($sentence === $entry) {
+                    $point += 10000;
+                }
+                foreach(explode(" ",$sentence) as $word){
+                    foreach(explode(" ",$entry) as $entryWord){
+                        if($word === $entryWord){
+                            $point += 100;
+                        }
+                        foreach(str_split($word) as $letter){
+                            foreach(str_split($entryWord) as $entryLetter){
+                                if($letter === $entryLetter){
+                                    $point += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            $responseArray[count($responseArray) - 1]["entry"] = $entry;
+            $responseArray[count($responseArray) - 1]["researchIn"] = $row;
+            $responseArray[count($responseArray) - 1]["point"] = $point;
+
+        }
+
+        usort($responseArray,array($this,"compareGamesPoints"));
+        return $responseArray;
+    }
+
+    static function compareGamesPoints($a, $b)
+    {
+        if ($a["point"] == $b["point"]) {
+            return 0;
+        }
+        return ($a["point"] > $b["point"]) ? -1 : 1;
+    }
+
 }
