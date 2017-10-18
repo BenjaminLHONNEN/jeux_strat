@@ -45,7 +45,7 @@ th:first-child{
 tr{
     border-bottom: 1px solid #888;
 }
-tr:last-child,tr:first-child{
+tr:last-child{
     border-bottom: none;
 }
 th:last-child{

@@ -26,7 +26,11 @@ class GameType extends AbstractType
             ->addModelTransformer(new CallbackTransformer(
             function ($tagsAsArray) {
                 // transform the array to a string
-                return implode(', ', $tagsAsArray);
+                if(is_array($tagsAsArray)) {
+                    return implode(', ', $tagsAsArray);
+                } else {
+                    return $tagsAsArray;
+                }
             },
             function ($tagsAsString) {
                 // transform the string back to an array
