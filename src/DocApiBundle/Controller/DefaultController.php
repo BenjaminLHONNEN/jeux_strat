@@ -8,7 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/api")
+     * @Route("/api",name="doc_api")
      */
     public function indexAction()
     {

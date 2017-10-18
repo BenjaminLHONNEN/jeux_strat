@@ -17,6 +17,12 @@ use Doctrine\ORM\Query;
 
 class GameByIdController extends Controller
 {
+    public function microtime_float()
+    {
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
+    }
+
     /**
      * @Route("/api/gameById/{gameId}",requirements={"gameId": "[0-9]+"})
      */

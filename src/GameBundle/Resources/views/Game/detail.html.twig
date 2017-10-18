@@ -26,6 +26,16 @@
                     {{ (averageNote) | round(2, 'floor') }} | 10
                 </span></td>
         </tr>
+        <tr>
+            <td colspan="3">
+                Tags :
+                {% for tag in game.tags %}
+                    {{ tag }}
+                {% else %}
+                    ...
+                {% endfor %}
+            </td>
+        </tr>
     </table>
 
     {% if user %}
