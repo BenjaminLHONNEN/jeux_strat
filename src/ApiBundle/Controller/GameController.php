@@ -127,6 +127,7 @@ class GameController extends Controller
                     }
 
                     $game['rating'] = $totalVote / $numberOfVote;
+                    $game['points'] = $resultGame["point"];
                     $responseArray[] = $game;
                 }
 
