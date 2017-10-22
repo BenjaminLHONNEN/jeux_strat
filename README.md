@@ -22,6 +22,9 @@ Admin : <br>
 admin@ynov.com <br>
 1234 <br>
 
+API DOC :  <br>
+*/doc/api  <br>
+
 ====
 
 Member of the Project :  <br>
